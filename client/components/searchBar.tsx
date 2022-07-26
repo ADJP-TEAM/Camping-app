@@ -14,7 +14,7 @@ const SearchBar = () => {
     <div id= "searchBar">
       <h1> Search Bar</h1>
       {/* Dropdown search bar */}
-      <Select value={search} onChange={setSearch} data={[]} />;
+      <Select value={search} onChange={setSearch} data={[]} />
 
       {/* DatePicker Calendar */}
       <DatePicker value={date} onChange={onChange}

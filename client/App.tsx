@@ -12,10 +12,11 @@ const App = (): JSX.Element => {
   return (
 
     <div id= "app">
-      <h1>AdventuRent</h1>
-      <SearchBar />
+      {/* <h1>AdventuRent</h1> */}
       <NavContainer />
-      <MainContainer />
+      <SearchBar />
+      
+      {/* <MainContainer /> */}
 
     </div>
 
