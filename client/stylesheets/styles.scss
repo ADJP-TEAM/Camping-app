@@ -14,7 +14,11 @@
 	padding-top: 5px;
   }
 
-  
+#mainContainer {
+	display: grid;
+	grid-template-columns: 300px repeat(auto-fill, 300px) 300px;;
+}
+
 // @mixin no-select {
 // 	-moz-user-select: none;
 // 	-webkit-user-select: none;

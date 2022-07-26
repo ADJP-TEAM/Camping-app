@@ -1,15 +1,27 @@
 import React, {useState, useEffect} from 'react';
 import {Routes, Route, useNavigate} from 'react-router-dom';
+import CardComponent from './CardComponent';
 
 
 
-const MainContainer = () => {
+const MainContainer = (props) => {
 
-  const [card, setCard] = useState[''];
+  // query db to fill cardsArray
+  const cardsArray = [];
+  for(let i = 0; i < 10; i++) {
+    cardsArray.push(
+      <CardComponent
+        id={i}
+        itemName={`Placeholder Name ${i}`}
+        itemDescription={`Placeholder Description ${i}`}
+        pricePerDay={`Placeholder Price ${i}`}
+      />
+    );
+  }
 
   return (
     <div id="mainContainer">
-      <h1> Main Container </h1>
+      {cardsArray}
     </div>
   );
 };
