@@ -24,33 +24,8 @@ import {
   IconSwitchHorizontal,
   IconChevronDown,
 } from '@tabler/icons';
-// import { MantineLogo } from '@mantine/ds';
+import * as dotenv from 'dotenv';
 
-// const NavContainer = () => {
-//   // return (
-//   //   <div id="navContainer">
-//   //     <div id="logo">
-//   //       <h1> ADVENTURENT</h1>
-//   //       {/* <a href='/'><img src={logo} id='logo' /></a> */}
-//   //       {/* BUTTONS PLACEHOLDER: */}
-//   //       <Button
-//   //         variant="gradient"
-//   //         gradient={{ from: 'teal', to: 'lime', deg: 105 }}
-//   //       >
-//   //         Login
-//   //       </Button>
-//   //       <Button
-//   //         variant="gradient"
-//   //         gradient={{ from: 'teal', to: 'lime', deg: 105 }}
-//   //       >
-//   //         Sign Up
-//   //       </Button>
-//   //     </div>
-//   //   </div>
-//   // );
-// };
-
-// export default NavContainer; //Container to add logo & login-sign up buttons
 const useStyles = createStyles((theme) => ({
   header: {
     paddingTop: theme.spacing.sm,
@@ -167,8 +142,7 @@ export default function NavContainer(props) {
     /* global google */
     // @ts-ignore
     google.accounts.id.initialize({
-      client_id:
-        '795207565134-60m35dko1d1ohdorjlg7akssqh1ghu19.apps.googleusercontent.com',
+      client_id: 'insert here'
       // callback - function to run when user is logged in
       callback: handleCallbackResponse,
     });
