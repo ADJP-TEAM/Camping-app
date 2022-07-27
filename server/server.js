@@ -1,6 +1,7 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
-import exampleRouter from './routes/example.js';
+import userRouter from './routes/users.js';
+import itemRouter from './routes/items.js';
 import fs from 'fs/promises';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -9,7 +10,9 @@ import { CustomError, error } from './utils/utils.js';
 /// Initialization
 // Initialize config
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const _config = JSON.parse(await fs.readFile(path.join(__dirname, './server.config.json')));
+const _config = JSON.parse(
+  await fs.readFile(path.join(__dirname, './server.config.json'))
+);
 
 // Set up application
 const app = express();
@@ -20,14 +23,13 @@ app.use(cookieParser());
 app.use('/', express.static(path.resolve(__dirname, '../dist')));
 
 /// Routes
-app.use('/api/example', exampleRouter);
-
+app.use('/api/users', userRouter);
+app.use('/api/items', itemRouter);
 
 // Catch-all
 app.all('*', (req, res) => {
   return res.sendStatus(404);
 });
-
 
 // Global error handler
 /**
@@ -35,14 +37,16 @@ app.all('*', (req, res) => {
  * @param {Error | {msg: string, err?: Error, code?: number}} info
  */
 function globalErrorHandler(info, req, res, next) {
-  const err = (info instanceof Error ? info : info.err);
-  const message = (info instanceof Error ? 'An unknown server error occurred' : info.msg);
-  const code = (
-    typeof info.code === 'number' ? info.code
-    : info.err instanceof CustomError ? info.err.statusCode
-    : 500
-  );
-  
+  const err = info instanceof Error ? info : info.err;
+  const message =
+    info instanceof Error ? 'An unknown server error occurred' : info.msg;
+  const code =
+    typeof info.code === 'number'
+      ? info.code
+      : info.err instanceof CustomError
+      ? info.err.statusCode
+      : 500;
+
   error(message);
   error(err);
   return res.status(code).send({ error: message });
@@ -56,7 +60,6 @@ app.use(globalErrorHandler);
     err: new ServerError('apiController.exampleMiddleware: Error occurred in middleware I guess')
   });
 */
-
 
 // Start server
 app.listen(_config.port, () => {

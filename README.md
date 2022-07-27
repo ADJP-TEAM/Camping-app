@@ -1,2 +1,3 @@
-# fullstack-template
-Generic template for building a fullstack project
+# AdvetuRent
+
+Rent camping equipment!
