@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Card, Image, Text, Badge, Button, Group } from '@mantine/core';
 import { idText } from 'typescript';
+import ListingPage from './ListingPage';
 
 const CardComponent = (props) => {
-  const navigate = useNavigate();
-  const handleClick = useCallback(
-    () => navigate('/listing', { 
-      replace: true, state: { id: props.id, itemName: props.itemName, itemDescription: props.itemDescription, pricePerDay: props.pricePerDay, location: props.location 
-      } }), [navigate, props]);
+  // const navigate = useNavigate();
+  // const handleClick = useCallback(
+  //   () => navigate('/listing', { 
+  //     replace: true, state: { id: props.id, itemName: props.itemName, itemDescription: props.itemDescription, pricePerDay: props.pricePerDay, location: props.location 
+  //     } }), [navigate, props]);
   
 
 
@@ -24,8 +25,8 @@ const CardComponent = (props) => {
 
       <Group position="apart" mt="md" mb="xs">
         <Text weight={500}>{props.itemName}</Text>
-        <Badge color="pink" variant="light">
-          {props.id}
+        <Badge color="green" variant="light">
+          ${props.price}.00
         </Badge>
       </Group>
 
@@ -33,9 +34,12 @@ const CardComponent = (props) => {
         {props.itemDescription}
       </Text>
 
-      <Button onClick={handleClick} variant="light" color="blue" fullWidth mt="md" radius="md">
+      <Link to={`/listing/${props.id}`}>
         Reserve Item(s)
-      </Button>
+      </Link>
+      {/* <Button onClick={handleClick} variant="light" color="blue" fullWidth mt="md" radius="md">
+        Reserve Item(s)
+      </Button> */}
     </Card>
   );
 };

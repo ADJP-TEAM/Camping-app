@@ -13,6 +13,8 @@ import { FooterLinks } from './components/FooterLinks';
 import { IconArrowRoundaboutLeft } from '@tabler/icons';
 
 const App = (): JSX.Element => {
+
+  const [zipcode, setZipcode] = useState(10001);
   const [user, setUser] = useState({});
   //const [user, setUser] = useState({});
 
@@ -101,12 +103,12 @@ const App = (): JSX.Element => {
             path="/"
             element={
               <>
-                <SearchBar />
-                <MainContainer />
+                <SearchBar setZipcode={setZipcode} zipcode={zipcode}/>
+                <MainContainer zipcode={zipcode} />
               </>
             }
           />
-          <Route path="/listing" element={<ListingPage />} />
+          <Route path="/listing/:id" element={<ListingPage />} />
         </Routes>
       </main>
     </div>
