@@ -5,18 +5,37 @@ import SearchBar from './components/searchBar';
 import NavContainer from './components/navContainer';
 import MainContainer from './components/mainContainer';
 import {Routes, Route, useNavigate} from 'react-router-dom';
+import ListingPage from './components/ListingPage';
 
 
-const App = (): JSX.Element => {
+const App = (props): JSX.Element => {
+
 
   return (
 
     <div id= "app">
       {/* <h1>AdventuRent</h1> */}
-      <NavContainer />
-      <SearchBar />
-      
-      {/* <MainContainer /> */}
+      <main>
+        <NavContainer />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <SearchBar />
+                <MainContainer />
+              </>
+            }
+          />
+          <Route
+            path="/listing"
+            element={
+              <ListingPage />
+            }
+          />
+        </Routes>
+      </main>
+     
 
     </div>
 

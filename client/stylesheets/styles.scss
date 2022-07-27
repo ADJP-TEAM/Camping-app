@@ -14,7 +14,18 @@
 	padding-top: 5px;
   }
 
-  
+#mainContainer {
+	display: grid;
+	grid-template-columns: 300px repeat(auto-fill, 300px) 300px;;
+}
+
+#imgContainer {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
 // @mixin no-select {
 // 	-moz-user-select: none;
 // 	-webkit-user-select: none;
