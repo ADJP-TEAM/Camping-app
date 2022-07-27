@@ -8,6 +8,9 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 import { getModeForUsageLocation } from 'typescript';
 import jwt_decode from 'jwt-decode';
 import ListingPage from './components/ListingPage';
+import { HeroImageBackground } from './components/Hero';
+import { FooterLinks } from './components/FooterLinks';
+import { IconArrowRoundaboutLeft } from '@tabler/icons';
 
 const App = (): JSX.Element => {
   const [user, setUser] = useState({});
@@ -25,6 +28,36 @@ const App = (): JSX.Element => {
     // console.log('Decoded JWT ID token: ', response.credential.idToken);
     // console.log('Google Oauth Object: ', response);
   };
+
+  let data = [
+    {
+      title: 'About',
+      links: [
+        { label: 'Features', link: 'string' },
+        { label: 'Support', link: 'string' },
+        { label: 'Forums', link: 'string' },
+      ],
+    },
+    {
+      title: 'Navigation',
+      links: [
+        { label: 'Tents', link: 'string' },
+        { label: 'Sleeping Bags', link: 'string' },
+        { label: 'Cookware', link: 'string' },
+        { label: 'Accessories', link: 'string' },
+        { label: 'Climbing Gear', link: 'string' },
+        { label: 'Kayaks & Rafting Gear', link: 'string' },
+      ],
+    },
+    {
+      title: 'Community',
+      links: [
+        { label: 'Join Discord', link: 'string' },
+        { label: 'Follow on Twitter', link: 'string' },
+        { label: 'Email newsletter', link: 'string' },
+      ],
+    },
+  ];
 
   // // Initialize google client with our client ID and button for login
   // // useEffect - if anything in empty initialized array changes, it will run useEffect again
@@ -52,9 +85,17 @@ const App = (): JSX.Element => {
         <NavContainer
           user={user}
           setUser={setUser}
-          tabs={['Tents', 'Sleeping Bags', 'Cookware', 'Accessories', 'Gear']}
+          tabs={[
+            'Tents',
+            'Sleeping Bags',
+            'Cookware',
+            'Accessories',
+            'Climbing Gear',
+            'Kayaks & Rafting Gear',
+          ]}
           handleCallbackResponse={handleCallbackResponse}
         />
+        <HeroImageBackground />
         <Routes>
           <Route
             path="/"
