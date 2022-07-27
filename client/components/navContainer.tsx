@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from 'react';
-<<<<<<< HEAD
-import { Routes, Route, useNavigate } from 'react-router-dom';
-=======
 import { Routes, Route, useNavigate, Link } from 'react-router-dom';
->>>>>>> dev
 // import logo from '../docs/AdventuRent.png';
 import { Button } from '@mantine/core';
 import {

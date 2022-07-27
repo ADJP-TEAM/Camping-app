@@ -7,7 +7,7 @@ const CardComponent = (props) => {
   const navigate = useNavigate();
   const handleClick = useCallback(
     () => navigate('/listing', { 
-      replace: true, state: { id: props.id, itemName: props.itemName, itemDescription: props.itemDescription, pricePerDay: props.pricePerDay 
+      replace: true, state: { id: props.id, itemName: props.itemName, itemDescription: props.itemDescription, pricePerDay: props.pricePerDay, location: props.location 
       } }), [navigate, props]);
   
 
