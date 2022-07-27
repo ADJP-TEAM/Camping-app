@@ -1,11 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, Image, Text, Badge, Button, Group } from '@mantine/core';
+import { idText } from 'typescript';
 
 const CardComponent = (props) => {
   const navigate = useNavigate();
-  const handleClick = useCallback(() => navigate('/listing', {replace: true}), [navigate]);
-
+  const handleClick = useCallback(
+    () => navigate('/listing', { 
+      replace: true, state: { id: props.id, itemName: props.itemName, itemDescription: props.itemDescription, pricePerDay: props.pricePerDay 
+      } }), [navigate, props]);
+  
 
 
   return (

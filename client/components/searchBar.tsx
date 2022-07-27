@@ -10,7 +10,6 @@ const SearchBar = () => {
   const [startDate, onChangeStart] = useState(new Date());
   const [endDate, onChangeEnd] = useState(new Date());
   const handleClick = () => {
-
     if(startDate > endDate) {
       alert('dates invalid');
     }

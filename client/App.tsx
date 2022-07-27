@@ -8,7 +8,8 @@ import {Routes, Route, useNavigate} from 'react-router-dom';
 import ListingPage from './components/ListingPage';
 
 
-const App = (): JSX.Element => {
+const App = (props): JSX.Element => {
+
 
   return (
 
