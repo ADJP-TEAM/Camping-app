@@ -7,6 +7,7 @@ import MainContainer from './components/mainContainer';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { getModeForUsageLocation } from 'typescript';
 import jwt_decode from 'jwt-decode';
+import ListingPage from './components/ListingPage';
 
 const App = (): JSX.Element => {
   // takes response from google client takes the response
@@ -42,10 +43,21 @@ const App = (): JSX.Element => {
     <div id="app">
       <div id="signInDiv"></div>
       {/* <h1>AdventuRent</h1> */}
-      <NavContainer />
-      <SearchBar />
-
-      {/* <MainContainer /> */}
+      <main>
+        <NavContainer />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <SearchBar />
+                <MainContainer />
+              </>
+            }
+          />
+          <Route path="/listing" element={<ListingPage />} />
+        </Routes>
+      </main>
     </div>
   );
 };
