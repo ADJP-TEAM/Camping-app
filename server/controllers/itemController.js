@@ -113,4 +113,16 @@ itemController.getItems = (req, res, next) => {
   });
 };
 
+itemController.getSingleItem = (req, res, next) => {
+  let text = `
+    SELECT * FROM Items
+    WHERE Items._id = $1
+    `;
+    query(text, [req.params.id]).then((data) => {
+      res.locals.item = data.rows;
+      console.log(res.locals.item);
+      return next();
+    });
+}
+
 export default itemController;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Grid, SimpleGrid, Skeleton, useMantineTheme, Image, Paper, Text } from '@mantine/core';
+import { Container, Grid, SimpleGrid, Skeleton, useMantineTheme, Image, Paper, Text, Badge } from '@mantine/core';
 
 const ListingPage = (props) => {
   const PRIMARY_COL_HEIGHT = 300;
@@ -8,6 +8,18 @@ const ListingPage = (props) => {
   const SECONDARY_COL_HEIGHT = PRIMARY_COL_HEIGHT / 2 - theme.spacing.md / 2;
   console.log('props', props)
   // const [itemDescription, setItem] = useState(props);
+  // @ts-ignore
+  const [itemData, setItemData] = useState({});
+  const getEndpoint = url => url.substring(url.lastIndexOf('/') + 1);
+
+
+  useEffect(() => {
+    const id = getEndpoint(window.location.href);
+    fetch(`/api/items/listing/${id}`)
+    .then(res => res.json())
+    .then(data => setItemData(data.item[0]))
+    .catch(err => console.error(err));
+  }, []);
 
 
   return (
@@ -20,22 +32,28 @@ const ListingPage = (props) => {
         />
         <Paper shadow="xs" p="md">
           <Text>Item Description</Text>
-          <Text>
-            {props.itemDescription}
+          <Text weight={500}>
+            {/* @ts-ignore */}
+            {itemData.name}
           </Text>
+          <br></br>
+        <Badge color="green" variant="light">
+          {/* @ts-ignore */}
+          ${itemData.cost}.00
+        </Badge>
         </Paper>
-        <Grid gutter="md">
+        {/* <Grid gutter="md">
           <Grid.Col>
            
-            {/* <Skeleton height={SECONDARY_COL_HEIGHT} radius="md" animate={false} /> */}
-          </Grid.Col>
-          <Grid.Col span={6}>
             <Skeleton height={SECONDARY_COL_HEIGHT} radius="md" animate={false} />
           </Grid.Col>
           <Grid.Col span={6}>
             <Skeleton height={SECONDARY_COL_HEIGHT} radius="md" animate={false} />
           </Grid.Col>
-        </Grid>
+          <Grid.Col span={6}>
+            <Skeleton height={SECONDARY_COL_HEIGHT} radius="md" animate={false} />
+          </Grid.Col>
+        </Grid> */}
       </SimpleGrid>
     </Container>
   );
