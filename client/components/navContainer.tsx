@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from 'react';
-<<<<<<< HEAD
-import { Routes, Route, useNavigate } from 'react-router-dom';
-=======
 import { Routes, Route, useNavigate, Link } from 'react-router-dom';
->>>>>>> dev
-// import logo from '../docs/AdventuRent.png';
 import { Button } from '@mantine/core';
 import {
   createStyles,
@@ -134,18 +129,31 @@ const useStyles = createStyles((theme) => ({
 }));
 
 interface HeaderTabsProps {
-  user?: { name: string; image: string };
+  user?: { given_name: string; picture: string; email: string };
   tabs?: string[];
+  picture?: string;
 }
 
 export default function NavContainer(props) {
-  let { user, tabs } = props;
+  // user is object, see header props
+  let { setUser, user, tabs, handleCallbackResponse } = props;
+  let { given_name, picture, email } = user;
   const { classes, theme, cx } = useStyles();
   const [opened, { toggle }] = useDisclosure(false);
   const [userMenuOpened, setUserMenuOpened] = useState(false);
 
-  tabs = ['tents', 'sleeping bags', 'camping gear', 'clothing'];
-  user = { name: 'John Doe', image: 'https://placekitten.com/200/200' };
+  console.log(user, 'this is user before logging in');
+  // user = { name: 'John Doe', image: 'https://placekitten.com/200/200' };
+  console.log(user, 'this is user after logging in');
+
+  // if user is not logged in, user should say "Login" and "Sign Up"
+  // if user is logged in, user name should be displayed with avatar
+
+  if (!user.email) {
+    given_name = 'Login / Sign Up';
+    picture = null;
+    email = null;
+  }
 
   const items = tabs.map((tab) => (
     <Tabs.Tab value={tab} key={tab}>
@@ -153,106 +161,130 @@ export default function NavContainer(props) {
     </Tabs.Tab>
   ));
 
+  // Initialize google client with our client ID and button for login
+  // useEffect - if anything in empty initialized array changes, it will run useEffect again
+  useEffect(() => {
+    /* global google */
+    // @ts-ignore
+    google.accounts.id.initialize({
+      client_id:
+        '795207565134-60m35dko1d1ohdorjlg7akssqh1ghu19.apps.googleusercontent.com',
+      // callback - function to run when user is logged in
+      callback: handleCallbackResponse,
+    });
+    // @ts-ignore
+    google.accounts.id.renderButton(document.getElementById('signInDiv'), {
+      theme: 'outline',
+      size: 'large',
+    });
+  }, []);
+
   return (
     <div className={classes.header}>
       <Container className={classes.mainSection}>
         <Group position="apart">
-          <img src="../docs/AdventuRentLogo.png" width="30px" height="30px" />
-
+          <img src="https://i.imgur.com/t87rGWz.png" height="60px" />
           <Burger
             opened={opened}
             onClick={toggle}
             className={classes.burger}
             size="sm"
           />
+          {user.email ? (
+            <Menu
+              width={260}
+              position="bottom-end"
+              transition="pop-top-right"
+              onClose={() => setUserMenuOpened(false)}
+              onOpen={() => setUserMenuOpened(true)}
+            >
+              <Menu.Target>
+                <UnstyledButton
+                  className={cx(classes.user, {
+                    [classes.userActive]: userMenuOpened,
+                  })}
+                >
+                  <Group spacing={7}>
+                    <Avatar
+                      src={picture}
+                      alt={given_name}
+                      radius="xl"
+                      size={20}
+                    />
+                    <Text weight={500} size="sm" sx={{ lineHeight: 1 }} mr={3}>
+                      {given_name === 'Login / Sign Up'
+                        ? 'Login / Sign Up'
+                        : `Welcome ${given_name}!`}
+                    </Text>
+                    <IconChevronDown size={12} stroke={1.5} />
+                  </Group>
+                </UnstyledButton>
+              </Menu.Target>
+              <Menu.Dropdown>
+                <Menu.Item
+                  icon={
+                    <IconHeart
+                      size={14}
+                      color={theme.colors.red[6]}
+                      stroke={1.5}
+                    />
+                  }
+                >
+                  Liked posts
+                </Menu.Item>
+                <Menu.Item
+                  icon={
+                    <IconStar
+                      size={14}
+                      color={theme.colors.yellow[6]}
+                      stroke={1.5}
+                    />
+                  }
+                >
+                  Saved posts
+                </Menu.Item>
+                <Menu.Item
+                  icon={
+                    <IconMessage
+                      size={14}
+                      color={theme.colors.blue[6]}
+                      stroke={1.5}
+                    />
+                  }
+                >
+                  Your comments
+                </Menu.Item>
 
-          <Menu
-            width={260}
-            position="bottom-end"
-            transition="pop-top-right"
-            onClose={() => setUserMenuOpened(false)}
-            onOpen={() => setUserMenuOpened(true)}
-          >
-            <Menu.Target>
-              <UnstyledButton
-                className={cx(classes.user, {
-                  [classes.userActive]: userMenuOpened,
-                })}
-              >
-                <Group spacing={7}>
-                  <Avatar
-                    src={user.image}
-                    alt={user.name}
-                    radius="xl"
-                    size={20}
-                  />
-                  <Text weight={500} size="sm" sx={{ lineHeight: 1 }} mr={3}>
-                    {user.name}
-                  </Text>
-                  <IconChevronDown size={12} stroke={1.5} />
-                </Group>
-              </UnstyledButton>
-            </Menu.Target>
-            <Menu.Dropdown>
-              <Menu.Item
-                icon={
-                  <IconHeart
-                    size={14}
-                    color={theme.colors.red[6]}
-                    stroke={1.5}
-                  />
-                }
-              >
-                Liked posts
-              </Menu.Item>
-              <Menu.Item
-                icon={
-                  <IconStar
-                    size={14}
-                    color={theme.colors.yellow[6]}
-                    stroke={1.5}
-                  />
-                }
-              >
-                Saved posts
-              </Menu.Item>
-              <Menu.Item
-                icon={
-                  <IconMessage
-                    size={14}
-                    color={theme.colors.blue[6]}
-                    stroke={1.5}
-                  />
-                }
-              >
-                Your comments
-              </Menu.Item>
+                <Menu.Label>Settings</Menu.Label>
+                <Menu.Item icon={<IconSettings size={14} stroke={1.5} />}>
+                  Account settings
+                </Menu.Item>
+                <Menu.Item
+                  icon={<IconSwitchHorizontal size={14} stroke={1.5} />}
+                >
+                  Change account
+                </Menu.Item>
+                <Menu.Item icon={<IconLogout size={14} stroke={1.5} />}>
+                  Logout
+                </Menu.Item>
 
-              <Menu.Label>Settings</Menu.Label>
-              <Menu.Item icon={<IconSettings size={14} stroke={1.5} />}>
-                Account settings
-              </Menu.Item>
-              <Menu.Item icon={<IconSwitchHorizontal size={14} stroke={1.5} />}>
-                Change account
-              </Menu.Item>
-              <Menu.Item icon={<IconLogout size={14} stroke={1.5} />}>
-                Logout
-              </Menu.Item>
+                <Menu.Divider />
 
-              <Menu.Divider />
-
-              <Menu.Label>Danger zone</Menu.Label>
-              <Menu.Item icon={<IconPlayerPause size={14} stroke={1.5} />}>
-                Pause subscription
-              </Menu.Item>
-              <Menu.Item
-                color="red"
-                icon={<IconTrash size={14} stroke={1.5} />}
-              >
-                Delete account
-              </Menu.Item>
-            </Menu.Dropdown>
-          </Menu>
+                <Menu.Label>Danger zone</Menu.Label>
+                <Menu.Item icon={<IconPlayerPause size={14} stroke={1.5} />}>
+                  Pause subscription
+                </Menu.Item>
+                <Menu.Item
+                  color="red"
+                  icon={<IconTrash size={14} stroke={1.5} />}
+                >
+                  Delete account
+                </Menu.Item>
+              </Menu.Dropdown>
+            </Menu>
+          ) : (
+            <div id="signInDiv"></div>
+          )}
         </Group>
       </Container>
       <Container>
