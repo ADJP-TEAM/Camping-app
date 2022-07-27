@@ -15,6 +15,7 @@ const MainContainer = (props) => {
         itemName={`Placeholder Name ${i}`}
         itemDescription={`Placeholder Description ${i}`}
         pricePerDay={`Placeholder Price ${i}`}
+        location={`Placeholder Location ${i}`}
       />
     );
   }

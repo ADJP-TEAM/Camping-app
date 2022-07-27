@@ -4,11 +4,27 @@ import { Select, TextInput, Button } from '@mantine/core';
 import { DatePicker } from '@mantine/dates';
 
 
-const SearchBar = () => {
+const SearchBar = (props, locationId) => {
 
   const [zipcode, setZipcode] = useState('');
+  console.log('zipcode here', zipcode);
+ 
+
   const [startDate, onChangeStart] = useState(new Date());
   const [endDate, onChangeEnd] = useState(new Date());
+
+  const fetchLocation = () => {
+    fetch(`/api/items/${locationId}`)
+    .then(response => response.json())
+    .then(data => console.log('inside of fecth', data));
+  };
+
+  useEffect(() => {
+    fetchLocation();
+  }, []);
+
+
+
   const handleClick = () => {
     if(startDate > endDate) {
       alert('dates invalid');
@@ -17,7 +33,9 @@ const SearchBar = () => {
       alert('please enter zipcode');
     }
     else {
-      alert('should query db and show listings according to user search criteria');
+      // alert('should query db and show listings according to user search criteria');
+      fetchLocation();
+
     }
   };
 

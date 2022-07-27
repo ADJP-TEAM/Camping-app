@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate, Link } from 'react-router-dom';
+// import logo from '../docs/AdventuRent.png';
 import { Button } from '@mantine/core';
 import {
   createStyles,
@@ -142,7 +143,7 @@ export default function NavContainer(props) {
     /* global google */
     // @ts-ignore
     google.accounts.id.initialize({
-      client_id: 'insert here'
+      client_id: 'insert here',
       // callback - function to run when user is logged in
       callback: handleCallbackResponse,
     });
